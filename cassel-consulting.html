@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassel Consulting — Résolution de crise & Négociation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ef;
+    --gold: #b8a06a;
+    --gold-light: #d4bc8a;
+    --gray-dark: #1a1a1a;
+    --gray-mid: #2e2e2e;
+    --gray-light: #6b6b6b;
+    --gray-ultra: #3d3d3d;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    cursor: default;
+    overflow-x: hidden;
+  }
+
+  /* CURSOR */
+  body { cursor: none; }
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(184,160,106,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+  }
+  a:hover ~ .cursor, button:hover ~ .cursor { width: 14px; height: 14px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(184,160,106,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 10% 80%, rgba(184,160,106,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    max-width: 800px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--gray-light);
+    max-width: 440px;
+    line-height: 1.9;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 40px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .btn-primary:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .hero-scroll {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-ultra);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gray-ultra);
+  }
+  .hero-number {
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    font-family: var(--serif);
+    font-size: 180px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    user-select: none;
+    opacity: 0;
+    animation: fadeIn 2s ease 1.2s forwards;
+  }
+  .hero-line {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: 30%;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 60px;
+    margin: 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-mid);
+  }
+  .divider-text {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* SECTION COMMON */
+  section {
+    padding: 120px 60px;
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 60px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+
+  /* ABOUT */
+  .about {
+    background: var(--gray-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-left {}
+  .about-right { padding-top: 20px; }
+  .about-bio {
+    font-size: 14px;
+    color: rgba(245,243,239,0.7);
+    line-height: 2;
+    margin-bottom: 32px;
+  }
+  .about-quote {
+    border-left: 1px solid var(--gold);
+    padding: 20px 0 20px 32px;
+    margin: 40px 0;
+  }
+  .about-quote p {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .stat-item {}
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    line-height: 1.5;
+  }
+  .credentials {
+    margin-top: 48px;
+  }
+  .credential-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .credential-year {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--gold);
+    min-width: 50px;
+    padding-top: 2px;
+  }
+  .credential-text {
+    font-size: 13px;
+    color: rgba(245,243,239,0.65);
+    line-height: 1.7;
+  }
+
+  /* SERVICES */
+  .services { background: var(--black); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray-mid);
+    border: 1px solid var(--gray-mid);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 48px 40px;
+    transition: background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover { background: var(--gray-dark); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-num {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0.6;
+  }
+  .service-name {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+  .service-desc {
+    font-size: 13px;
+    color: rgba(245,243,239,0.55);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+  .service-price {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* PROCESS */
+  .process { background: var(--gray-dark); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), var(--gold), transparent);
+    opacity: 0.3;
+  }
+  .process-step { padding: 0 32px 0 0; }
+  .process-step-num {
+    width: 56px; height: 56px;
+    border: 1px solid var(--gray-ultra);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    background: var(--gray-dark);
+    position: relative;
+    z-index: 1;
+  }
+  .process-step-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .process-step-text {
+    font-size: 13px;
+    color: rgba(245,243,239,0.5);
+    line-height: 1.8;
+  }
+
+  /* TARIFS */
+  .tarifs { background: var(--black); }
+  .tarifs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  .tarifs-table thead tr {
+    border-bottom: 1px solid var(--gray-ultra);
+  }
+  .tarifs-table th {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    padding: 0 0 20px;
+    text-align: left;
+  }
+  .tarifs-table th:last-child { text-align: right; }
+  .tarifs-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s ease;
+  }
+  .tarifs-table tbody tr:hover { background: rgba(184,160,106,0.03); }
+  .tarifs-table td {
+    padding: 24px 0;
+    vertical-align: top;
+  }
+  .tarifs-table td:last-child { text-align: right; }
+  .tarif-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .tarif-desc {
+    font-size: 12px;
+    color: var(--gray-light);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+  .tarif-price {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .tarif-note {
+    font-size: 11px;
+    color: var(--gray-light);
+    margin-top: 4px;
+  }
+  .tarif-col { width: 48px; padding-right: 24px; }
+  .tarif-num {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--gray-ultra);
+    padding-top: 6px;
+  }
+
+  /* CHARTE */
+  .charte { background: var(--gray-dark); }
+  .charte-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray-mid);
+  }
+  .charte-item {
+    background: var(--gray-dark);
+    padding: 40px;
+  }
+  .charte-item-num {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 300;
+    color: rgba(184,160,106,0.12);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .charte-item-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .charte-item-text {
+    font-size: 13px;
+    color: rgba(245,243,239,0.5);
+    line-height: 1.8;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--black);
+    text-align: center;
+    padding: 140px 60px;
+  }
+  .contact .section-title { margin-bottom: 24px; }
+  .contact-sub {
+    font-size: 13px;
+    color: var(--gray-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 56px;
+    line-height: 1.9;
+  }
+  .contact-form {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .form-row { margin-bottom: 24px; }
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--gray-ultra);
+    padding: 12px 0;
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s ease;
+    appearance: none;
+  }
+  .form-select { cursor: pointer; }
+  .form-select option { background: var(--gray-dark); color: var(--white); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-bottom-color: var(--gold);
+  }
+  .form-textarea { resize: none; height: 100px; }
+  .form-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .form-disclaimer {
+    font-size: 11px;
+    color: var(--gray-light);
+    line-height: 1.7;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--gray-mid);
+    font-style: italic;
+  }
+  .btn-submit {
+    width: 100%;
+    padding: 20px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    margin-top: 40px;
+  }
+  .btn-submit:hover { background: var(--gold); color: var(--black); }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray-dark);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--gray-mid);
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-text {
+    font-size: 11px;
+    color: var(--gray-light);
+    letter-spacing: 0.1em;
+  }
+  .footer-mention {
+    font-size: 11px;
+    color: var(--gray-ultra);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); opacity: 0.4; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 24px 28px; }
+    .nav-links { display: none; }
+    section { padding: 80px 28px; }
+    .hero { padding: 0 28px; }
+    .hero-title { font-size: 52px; }
+    .hero-number { display: none; }
+    .about { grid-template-columns: 1fr; gap: 48px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+    .charte-grid { grid-template-columns: 1fr; }
+    .form-row-grid { grid-template-columns: 1fr; gap: 24px; }
+    .divider { padding: 0 28px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Cassel<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#services">Missions</a></li>
+    <li><a href="#tarifs">Honoraires</a></li>
+    <li><a href="#charte">Déontologie</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-line"></div>
+  <p class="hero-eyebrow">Los Santos &nbsp;·&nbsp; Cabinet de résolution de crise</p>
+  <h1 class="hero-title">
+    Quand le dialogue<br>
+    <em>semble impossible</em>
+  </h1>
+  <p class="hero-sub">
+    Cassel Consulting intervient là où les canaux habituels ont échoué. Négociation de crise, médiation de conflits, résolution de situations critiques. Discrétion absolue.
+  </p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">Solliciter une intervention</a>
+    <span class="hero-scroll">Découvrir</span>
+  </div>
+  <span class="hero-number">C.</span>
+</section>
+
+<div class="divider"><span class="divider-text">Cassel Consulting &nbsp;·&nbsp; Fondé en 2015</span></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <p class="section-label">Le cabinet</p>
+    <h2 class="section-title">Damien <em>Cassel</em></h2>
+    <p class="about-bio">
+      Vingt ans passés aux intersections les plus critiques de la négociation internationale. Interpol, secteur privé européen, gestion de crises d'entreprise. M. Cassel a développé une méthode rigoureuse, éprouvée dans les situations où le temps manque et où les enjeux dépassent le simple différend.
+    </p>
+    <p class="about-bio">
+      Installé à Los Santos depuis 2018, Cassel Consulting opère en toute indépendance, sans affiliation institutionnelle. Cette neutralité n'est pas une contrainte — c'est le fondement de l'efficacité du cabinet.
+    </p>
+    <div class="about-quote">
+      <p>"Je ne prends pas parti. Je ne juge pas ce qui s'est passé avant. Je suis là pour qu'il y ait un après."</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-number">23</div>
+        <div class="stat-label">Négociations de crise réalisées</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">96%</div>
+        <div class="stat-label">Taux de résolution sans incident</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Années d'expérience terrain</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Continents d'intervention</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <p class="section-label">Parcours</p>
+    <div class="credentials">
+      <div class="credential-item">
+        <span class="credential-year">1995</span>
+        <span class="credential-text">Intégration à l'unité de négociation de crise d'Interpol. Spécialisation en situations de prise d'otages transfrontalières.</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-year">2003</span>
+        <span class="credential-text">Certification FBI Crisis Negotiation Unit. Transition vers le secteur privé européen — cabinets d'avocats, groupes industriels, familles fortunées.</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-year">2012</span>
+        <span class="credential-text">Création de Cassel Consulting. Indépendance totale. Le cabinet ne répond qu'à ses propres standards déontologiques.</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-year">2018</span>
+        <span class="credential-text">Installation à Los Santos. Développement d'une pratique locale couvrant l'ensemble du spectre — institutions, entreprises, particuliers.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="divider-text">Champ d'intervention</span></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="reveal">
+    <p class="section-label">Missions</p>
+    <h2 class="section-title">Ce que nous <em>traitons</em></h2>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Prise d'otage</div>
+      <div class="service-desc">Intervention civile en situation de séquestration active. M. Cassel s'interpose comme tiers neutre entre les parties pour créer les conditions d'une résolution sans violence.</div>
+      <div class="service-price">À partir de 80 000 $</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Trêve & médiation</div>
+      <div class="service-desc">Organisation et présidence d'une table de négociation entre organisations en conflit. M. Cassel garantit un cadre neutre et confidentiel pour parvenir à un accord formalisé.</div>
+      <div class="service-price">À partir de 40 000 $</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Crise familiale</div>
+      <div class="service-desc">Accompagnement de familles confrontées à une situation d'enlèvement ou de menace grave. Disponibilité totale, intervention discrète, prise en charge complète du processus de récupération.</div>
+      <div class="service-price">À partir de 60 000 $</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-name">Crise d'entreprise</div>
+      <div class="service-desc">Gestion de situations critiques en contexte professionnel — chantage, conflit interne extrême, menace sur dirigeant. Protection de la réputation et de la continuité opérationnelle.</div>
+      <div class="service-price">À partir de 35 000 $</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-name">Assistance institutionnelle</div>
+      <div class="service-desc">Collaboration avec les forces de l'ordre sur des situations dépassant leur formation en négociation. Intervention en qualité de consultant civil accrédité.</div>
+      <div class="service-price">Sur convention</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-name">Médiation préventive</div>
+      <div class="service-desc">Intervention en amont d'une crise potentielle. Désescalade d'un différend avant qu'il atteigne le point de non-retour. La mission la plus discrète — et souvent la plus décisive.</div>
+      <div class="service-price">À partir de 20 000 $</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="reveal">
+    <p class="section-label">Méthode</p>
+    <h2 class="section-title">Le <em>protocole</em></h2>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="process-step-num">I</div>
+      <div class="process-step-title">Briefing</div>
+      <div class="process-step-text">Analyse de la situation par téléphone. Cinq questions précises. Évaluation du risque et confirmation de prise en charge.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">II</div>
+      <div class="process-step-title">Confirmation</div>
+      <div class="process-step-text">Définition du cadre d'intervention et des honoraires. Premier versement requis avant déplacement.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">III</div>
+      <div class="process-step-title">Intervention</div>
+      <div class="process-step-text">Présence sur site. Établissement d'un espace de dialogue neutre. Application du protocole de négociation adapté à la situation.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">IV</div>
+      <div class="process-step-title">Conclusion</div>
+      <div class="process-step-text">Accord formalisé et signé par les parties, ou constat de situation. Solde des honoraires. Départ sans séquelles.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="tarifs" id="tarifs">
+  <div class="reveal">
+    <p class="section-label">Honoraires</p>
+    <h2 class="section-title">Transparence <em>tarifaire</em></h2>
+  </div>
+  <table class="tarifs-table reveal">
+    <thead>
+      <tr>
+        <th class="tarif-col"></th>
+        <th>Mission</th>
+        <th>Honoraires</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tarif-col"><div class="tarif-num">01</div></td>
+        <td>
+          <div class="tarif-name">Prise d'otage active</div>
+          <div class="tarif-desc">Situation en cours, risque vital. Disponibilité immédiate. Payable par la famille ou par toute institution mandante.</div>
+        </td>
+        <td>
+          <div class="tarif-price">80 000 $</div>
+          <div class="tarif-note">50% à la confirmation</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tarif-col"><div class="tarif-num">02</div></td>
+        <td>
+          <div class="tarif-name">Crise familiale & enlèvement</div>
+          <div class="tarif-desc">Accompagnement complet, disponibilité totale pendant la durée de la crise.</div>
+        </td>
+        <td>
+          <div class="tarif-price">60 000 $</div>
+          <div class="tarif-note">50% à la confirmation</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tarif-col"><div class="tarif-num">03</div></td>
+        <td>
+          <div class="tarif-name">Trêve entre organisations</div>
+          <div class="tarif-desc">Briefing séparé de chaque partie, organisation et présidence de la table de négociation, accord formalisé.</div>
+        </td>
+        <td>
+          <div class="tarif-price">40 000 $</div>
+          <div class="tarif-note">Partageable entre les parties</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tarif-col"><div class="tarif-num">04</div></td>
+        <td>
+          <div class="tarif-name">Médiation préventive</div>
+          <div class="tarif-desc">Intervention avant la crise. Désescalade d'un différend à fort potentiel conflictuel.</div>
+        </td>
+        <td>
+          <div class="tarif-price">20 000 $</div>
+          <div class="tarif-note">Paiement intégral à la mission</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tarif-col"><div class="tarif-num">+</div></td>
+        <td>
+          <div class="tarif-name">Suppléments applicables</div>
+          <div class="tarif-desc">Urgence &lt; 1h (+30%) &nbsp;·&nbsp; Intervention nocturne (+15 000 $) &nbsp;·&nbsp; Accord formalisé (+5 000 $)</div>
+        </td>
+        <td>
+          <div class="tarif-price" style="font-size:16px">Variables</div>
+          <div class="tarif-note">Annoncés avant intervention</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--gray-light);margin-top:32px;font-style:italic;line-height:1.8" class="reveal">
+    Le résultat n'est jamais garanti — il dépend de la volonté des parties. Les honoraires couvrent l'expertise, le temps et le processus, quelle qu'en soit l'issue. Cette précision est communiquée à chaque client avant engagement.
+  </p>
+</section>
+
+<!-- CHARTE -->
+<section class="charte" id="charte">
+  <div class="reveal">
+    <p class="section-label">Déontologie</p>
+    <h2 class="section-title">Les principes <em>du cabinet</em></h2>
+  </div>
+  <div class="charte-grid reveal">
+    <div class="charte-item">
+      <div class="charte-item-num">I</div>
+      <div class="charte-item-title">Neutralité absolue</div>
+      <div class="charte-item-text">Cassel Consulting n'appartient à aucun camp, ne défend aucune cause particulière. La neutralité n'est pas une posture — c'est la condition sine qua non de l'efficacité.</div>
+    </div>
+    <div class="charte-item">
+      <div class="charte-item-num">II</div>
+      <div class="charte-item-title">Vérité sans concession</div>
+      <div class="charte-item-text">M. Cassel ne ment jamais — à aucune des parties. Ce qu'il dit est vrai. Ce qu'il ne dit pas, il l'assume. Cette règle est la source de toute crédibilité dans la négociation.</div>
+    </div>
+    <div class="charte-item">
+      <div class="charte-item-num">III</div>
+      <div class="charte-item-title">Confidentialité totale</div>
+      <div class="charte-item-text">Ce qui se dit dans une négociation reste dans la négociation. Sans exception. Aucune institution ne peut contraindre le cabinet à divulguer le contenu de ses interventions.</div>
+    </div>
+    <div class="charte-item">
+      <div class="charte-item-num">IV</div>
+      <div class="charte-item-title">Intégrité du processus</div>
+      <div class="charte-item-text">Si une partie manipule le processus en mentant délibérément, M. Cassel quitte la table. Il ne reprend pas sans que la partie concernée l'ait sollicité. Jamais l'inverse.</div>
+    </div>
+    <div class="charte-item">
+      <div class="charte-item-num">V</div>
+      <div class="charte-item-title">Indépendance totale</div>
+      <div class="charte-item-text">Cassel Consulting ne répond à aucune structure, n'entretient aucune relation d'exclusivité. M. Cassel choisit ses missions selon ses propres critères.</div>
+    </div>
+    <div class="charte-item">
+      <div class="charte-item-num">VI</div>
+      <div class="charte-item-title">Non-intervention hors périmètre</div>
+      <div class="charte-item-text">Le cabinet n'exerce aucune activité de sécurité, de représentation légale ou d'enquête. Chaque mission est strictement délimitée à son objet de négociation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label reveal">Contact</p>
+  <h2 class="section-title reveal">Solliciter une <em>intervention</em></h2>
+  <p class="contact-sub reveal">
+    Les demandes sont traitées dans les meilleurs délais.<br>
+    Toute sollicitation est confidentielle dès réception.
+  </p>
+  <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+    <div class="form-row-grid">
+      <div class="form-row">
+        <label class="form-label">Nom ou alias</label>
+        <input type="text" class="form-input" placeholder="Comment vous adresser">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Moyen de contact RP</label>
+        <input type="text" class="form-input" placeholder="Numéro / fréquence radio">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Nature de la situation</label>
+      <select class="form-select">
+        <option value="" disabled selected>Sélectionner</option>
+        <option>Prise d'otage active</option>
+        <option>Conflit entre organisations</option>
+        <option>Crise familiale</option>
+        <option>Crise d'entreprise</option>
+        <option>Médiation préventive</option>
+        <option>Assistance institutionnelle</option>
+        <option>Autre situation</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Description sommaire</label>
+      <textarea class="form-textarea" placeholder="Décrivez la situation en quelques lignes — qui, quoi, depuis combien de temps. Pas de détails compromettants par écrit."></textarea>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Niveau d'urgence</label>
+      <select class="form-select">
+        <option value="" disabled selected>Évaluer</option>
+        <option>Critique — intervention immédiate requise</option>
+        <option>Urgent — dans les 24 heures</option>
+        <option>Standard — dans les 48–72 heures</option>
+        <option>Préventif — pas d'urgence immédiate</option>
+      </select>
+    </div>
+    <p class="form-disclaimer">
+      Ce formulaire ne constitue pas un engagement contractuel. Aucune information transmise ici ne sera divulguée à des tiers. M. Cassel vous contactera pour un briefing confidentiel avant toute confirmation de mission.
+    </p>
+    <button type="submit" class="btn-submit">Transmettre la demande</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">Cassel<span>.</span> Consulting</div>
+  <div class="footer-text">Los Santos &nbsp;·&nbsp; Cabinet indépendant de résolution de crise</div>
+  <div class="footer-mention">Tous droits réservés &nbsp;·&nbsp; Confidentialité garantie</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .service-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '14px'; cursor.style.height = '14px'; ring.style.width = '48px'; ring.style.height = '48px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '8px'; cursor.style.height = '8px'; ring.style.width = '32px'; ring.style.height = '32px'; });
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Demande transmise — M. Cassel vous contactera';
+    btn.style.borderColor = 'rgba(184,160,106,0.4)';
+    btn.style.color = 'rgba(184,160,106,0.6)';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
